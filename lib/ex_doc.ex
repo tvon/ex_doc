@@ -16,7 +16,7 @@ defmodule ExDoc do
       extra_section: nil,
       extras: [],
       filter_prefix: nil,
-      formatter: "html",
+      formatter: ExDoc.Formatter.Latex,
       formatter_opts: [],
       homepage_url: nil,
       logo: nil,
@@ -72,6 +72,7 @@ defmodule ExDoc do
   def generate_docs(project, vsn, options) when is_binary(project) and is_binary(vsn) and is_list(options) do
     config = build_config(project, vsn, options)
     docs = config.retriever.docs_from_dir(config.source_beam, config)
+    IO.puts("config: #{inspect config, pretty: true}")
     find_formatter(config.formatter).run(docs, config)
   end
 

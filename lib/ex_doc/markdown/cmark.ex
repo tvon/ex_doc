@@ -17,4 +17,11 @@ defmodule ExDoc.Markdown.Cmark do
   def to_html(text, _opts) do
     Cmark.to_html(text)
   end
+
+  @doc """
+  Generate LaTeX output. Cmark takes no options.
+  """
+  def to_latex(text, _opts \\ []) do
+    Cmark.to_latex(text)
+  end
 end
