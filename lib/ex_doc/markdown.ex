@@ -32,6 +32,11 @@ defmodule ExDoc.Markdown do
     pretty_codeblocks(get_markdown_processor().to_html(text, opts))
   end
 
+  # TODO: Should this be shoved in here given only cmark supports it?
+  def to_latex(text) do
+    get_markdown_processor().to_latex(text)
+  end
+
   @doc """
   Helper to handle plain code blocks (```...```) with and without
   language specification and indentation code blocks

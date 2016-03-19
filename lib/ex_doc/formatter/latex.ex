@@ -15,8 +15,15 @@ defmodule ExDoc.Formatter.Latex do
     File.rm_rf! output
     :ok = File.mkdir_p output
 
-    generate_document(module_nodes)
+    generate_document(module_nodes, output, config)
     Path.join(config.output, "document.tex")
+  end
+
+  ## private
+
+  defp generate_document(module_nodes, output, config) do
+    content = Templates.document(config, module_nodes)
+    File.write!("#{output}/document.tex", content)
   end
 
   defp normalize_config(%{main: "index"}) do
@@ -27,32 +34,9 @@ defmodule ExDoc.Formatter.Latex do
     %{config | main: main || @main}
   end
 
-  defp generate_document(module_nodes) do
-    IO.puts("module_nodes: #{inspect module_nodes}")
-    #file_name = "document.latex"
-    #config = set_canonical_url(config, file_name)
-    #content = Templates.generate(module_nodes)
-    #content = Templates.module_page(node, modules, exceptions, protocols, config)
-    #File.write!("#{output}/#{file_name}", content)
-  end
-
   defp templates_path(patterns) do
     Enum.into(patterns, [], fn {pattern, dir} ->
       {Path.expand("latex/templates/#{pattern}", __DIR__), dir}
     end)
-  end
-
-  # TODO: Not sure what this does exactly
-  defp set_canonical_url(config, file_name) do
-    if config.canonical do
-      canonical_url =
-        config.canonical
-        |> String.rstrip(?/)
-        |> Path.join(file_name)
-
-      Map.put(config, :canonical, canonical_url)
-    else
-      config
-    end
   end
 end

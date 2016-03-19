@@ -1,0 +1,2 @@
+\subsection{<%= to_latex(function_node.signature) |> String.strip %>}
+<%= to_latex(function_node.doc) |> subsectionize %>
